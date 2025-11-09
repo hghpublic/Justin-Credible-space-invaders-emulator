@@ -1,0 +1,19 @@
+= hello
+
+https://dotnet.microsoft.com/en-us/learn/dotnet/hello-world-tutorial/intro
+
+https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new
+
+----
+$ dotnet new console
+The template "Console App" was created successfully.
+
+Processing post-creation actions...
+Restoring .../hello/hello.csproj:
+Restore succeeded.
+
+
+
+$ dotnet run        
+Hello, World!
+----

@@ -1,0 +1,7 @@
+# macos
+.DS_Store
+
+# dotnet
+hello.csproj
+Program.cs
+obj/
