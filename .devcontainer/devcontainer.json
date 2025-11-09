@@ -1,0 +1,82 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
+{
+	"name": "space-invaders",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/dotnet:1-9.0-bookworm",
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},	
+	"features": {
+		"ghcr.io/devcontainers/features/dotnet:2": {},
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": true,
+			"configureZshAsDefaultShell": true,
+			"installOhMyZsh": true,
+			"upgradePackages": true,
+			"username": "vscode",
+			"userUid": "automatic",
+			"userGid": "automatic"
+		},
+		"ghcr.io/devcontainers/features/desktop-lite:1": {
+			"version": "latest",
+			"noVncVersion": "1.2.0",
+			"password": "noPassword",
+			"webPort": "6080",
+			"vncPort": "5901"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest"
+		}
+	},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [5000, 5001],
+	// "portsAttributes": {
+	//		"5001": {
+	//			"protocol": "https"
+	//		}
+	// }
+	"forwardPorts": [
+		5901,
+		6080,
+		3000,
+		8000
+	],
+	"portsAttributes": {
+		"5901": {
+			"label": "Xtigervnc"
+		},
+		"6080": {
+			"label": "noVNC"
+		},
+		"3000": {
+			"label": "wasm"
+		},
+		"8000": {
+			"label": "http.server"
+		}
+	},
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "dotnet restore",
+	// Configure tool-specific properties.
+	// "customizations": {},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"asciidoctor.asciidoctor-vscode",
+				"GitHub.copilot-chat",
+				"GitHub.copilot",
+				"Gruntfuggly.todo-tree",
+				"ms-azuretools.vscode-docker",
+				"ms-dotnettools.csdevkit",
+				"ms-dotnettools.vscodeintellicode-csharp",
+				"ms-python.black-formatter",
+				"ms-vscode.hexeditor",
+				"ms-vscode.live-server",
+				"timonwong.shellcheck",
+				"tomoki1207.pdf"
+			]
+		}
+	}
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
