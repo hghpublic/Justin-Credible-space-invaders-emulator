@@ -93,6 +93,7 @@ namespace JustinCredible.SIEmulator
          */
         public void InitializeAudio(Dictionary<SoundEffect, String> soundEffectsFiles = null)
         {
+            return; // TEMP DISABLE AUDIO
             var audioRate = 22050; // 22.05KHz
             var audioFormat = SDL.AUDIO_S16SYS; // Unsigned 16-bit samples in the system's byte order
             var audioChannels = 1; // Mono
