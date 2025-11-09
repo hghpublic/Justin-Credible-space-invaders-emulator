@@ -1,0 +1,21 @@
+= printenv
+
+----
+$ dotnet new console -n printenv
+The template "Console App" was created successfully.
+
+Processing post-creation actions...
+Restoring /workspaces/Justin-Credible-space-invaders-emulator/src/examples/printenv/printenv/printenv.csproj:
+Restore succeeded.
+
+$ cd printenv
+
+$ dotnet run
+Version: 9.0.10
+FrameworkDescription: .NET 9.0.10
+OSArchitecture: Arm64
+OSDescription: Debian GNU/Linux 12 (bookworm)
+ProcessArchitecture: Arm64
+RuntimeIdentifier: linux-arm64
+OSPlatform Linux: True
+----
