@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)https://www.justin-credible.net/2019/09/03/chip-8-emulator/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CHIP-8 Emulator</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<!-- stylesheets -->
+	<link href="./index_files/css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="./index_files/bootstrap.min.css">
+	<link rel="stylesheet" href="./index_files/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/screen.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/prism.css">
+	<!-- <link rel="stylesheet" type="text/css" href="/assets/demo-assets/css/colpick.css?v=6eb1265478"> -->
+	<script>
+/*====================================================
+  THEME SETTINGS & GLOBAL VARIABLES
+====================================================*/
+//  1. Disqus comment settings
+var disqus_shortname = ''; // required: replace example with your forum shortname
+
+//	2. Sidebar Position
+var sidebar_left = false; // Set true or flase for positioning sidebar on left
+
+//  3. Recent Post count
+var recent_post_count = 3;
+
+//	4. Google+ badge settings
+var badge_type = 'page'; // person / page / community ----- three type of google badge
+var google_plus_url = '';
+
+//	5. Facebook Page Setting
+var facebook_page_url = '';
+
+//	6. Mailchimp signup form Setting
+var mailchimp_form_url = ''; //'http://gbjsolution.us4.list-manage.com/subscribe?u=a63b2fed3ed61b70bf56d1aed&id=1e3806b1d4';
+var success_message = "Please check your inbox and confirm your email address. Thanks!";
+
+//	7. Flickr Setting
+var flickr_id = '52617155@N08';
+</script>
+    <link rel="canonical" href="http://www.justin-credible.net/2019/09/03/chip-8-emulator/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://www.justin-credible.net/2019/09/03/chip-8-emulator/amp/">
+    
+    <meta property="og:site_name" content="Justin Unterreiner">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="CHIP-8 Emulator">
+    <meta property="og:description" content="Emulators have always been magical to me. I vividly remember the first time I fired up an NES emulator and ran Super Mario Bros. on my 486DX. It didn&#39;t run fast, and the experience wasn&#39;t great, but it was magical. As Pentiums replaced the 486s, emulation became more viable and">
+    <meta property="og:url" content="http://www.justin-credible.net/2019/09/03/chip-8-emulator/">
+    <meta property="article:published_time" content="2019-09-03T19:03:46.000Z">
+    <meta property="article:modified_time" content="2020-01-08T06:33:52.000Z">
+    <meta property="article:tag" content="Software Development">
+    <meta property="article:tag" content="Emulators">
+    <meta property="article:tag" content="Gaming">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="CHIP-8 Emulator">
+    <meta name="twitter:description" content="Emulators have always been magical to me. I vividly remember the first time I fired up an NES emulator and ran Super Mario Bros. on my 486DX. It didn&#39;t run fast, and the experience wasn&#39;t great, but it was magical. As Pentiums replaced the 486s, emulation became more viable and">
+    <meta name="twitter:url" content="http://www.justin-credible.net/2019/09/03/chip-8-emulator/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Justin Unterreiner">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="Software Development, Emulators, Gaming">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Justin Unterreiner",
+        "logo": "http://www.justin-credible.net/ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Justin Unterreiner",
+        "image": "//www.gravatar.com/avatar/d822557c426b50ed688d74cb203af356?s=250&d=mm&r=x",
+        "url": "http://www.justin-credible.net/author/justin/",
+        "sameAs": [],
+        "description": "A software geek who is into IoT devices, gaming, and Arcade restoration."
+    },
+    "headline": "CHIP-8 Emulator",
+    "url": "http://www.justin-credible.net/2019/09/03/chip-8-emulator/",
+    "datePublished": "2019-09-03T19:03:46.000Z",
+    "dateModified": "2020-01-08T06:33:52.000Z",
+    "keywords": "Software Development, Emulators, Gaming",
+    "description": "Emulators have always been magical to me. I vividly remember the first time I fired up an NES emulator and ran Super Mario Bros. on my 486DX. It didn&#x27;t run fast, and the experience wasn&#x27;t great, but it was magical. As Pentiums replaced the 486s, emulation became more viable and",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://www.justin-credible.net"
+    }
+}
+    </script>
+
+    <script type="text/javascript" src="./index_files/ghost-url.min.js"></script>
+<script type="text/javascript">
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "31e4d64574f5"
+});
+</script>
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="Justin Unterreiner" href="http://www.justin-credible.net/rss/">
+    
+<link rel="stylesheet" href="./index_files/photoswipe.css">
+<link rel="stylesheet" href="./index_files/default-skin.css">
+
+<style type="text/css" media="screen">
+	.github-widget {
+        margin: 10px;
+        margin-bottom: 25px;
+    }
+    
+    ul.social {
+        font-size: 32px;
+    	text-align: center;
+    }
+
+    .gaming-links {
+        text-align: center;
+    }
+    
+    #grouvee_widget_62935_sidebar h2,
+    #grouvee_widget_62935_footer h2 {
+        display: none;
+    }
+
+    .grouvee_container {
+        display: inline-block;
+    }
+
+    .grouvee_game {
+        width: 90px;
+        height: 90px;
+        padding: 5px;
+        overflow: hidden;
+    }
+    
+    a.branding::after {
+        content: "\A Software development, arcade restoration, and the internet of things.";
+        font-size: 10pt;
+        white-space: pre-line;
+    }
+</style>
+
+<!-- Image Styles -->
+<style>
+.image-holder-75 {
+    text-align: center;
+}
+
+.image-holder-75 img {
+    width: 75%;
+}
+
+.image-holder-50 {
+    text-align: center;
+}
+
+.image-holder-50 img {
+	width: 48%;
+}
+    
+.photo-gallery {
+    text-align: center;
+ }
+
+.photo-gallery {
+  text-align: center;
+}
+
+.photo-gallery a {
+  padding: 5px;
+  margin: 6px;
+  display: inline-block;
+  border: solid 1px #b8b8b8;
+  background-color: #f4f5f5;
+}
+    
+.post .post-content .photo-gallery a img {
+    vertical-align: middle;
+    margin-bottom: 0px;
+}
+</style>
+
+<!-- Image captions -->
+<!-- https://blog.kchung.co/adding-image-captions-to-ghost/ -->
+<style>  
+.post .post-content figcaption {
+    font-weight: 400;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.3;
+    color: #666665;
+    outline: 0;
+    z-index: 300;
+    text-align: center;
+}
+    
+.post .post-content .photo-gallery figcaption {
+    display: none;
+}
+</style> 
+
+<!-- Instagram Sidebar -->
+<style>
+.instagram-sidebar i {
+    color: #959595;
+}
+</style>
+
+<!-- Base theme overrides -->
+<style>
+.widget .social li {
+    margin: 0 0 5px 0 !important;
+}
+
+@media (max-width: 768px) {
+    .main-header .branding {
+        font-size: 2em;
+    }
+
+    .main-header .branding:after {
+        font-size: 8pt;
+    }
+
+    .main-header {
+        padding-bottom: 10px;
+    }
+}
+</style>
+
+<!-- Base theme overrides -->
+<link rel="stylesheet" href="./index_files/css(1)">
+
+<!-- Justin's Arcade site -->
+<style>
+    body.tag-site-justins-arcade {
+        background-image: url('/content/images/arcade/site-background-4.jpg');
+        background-size: 75%;
+    }
+    body.tag-site-justins-arcade nav ul li:first-child {
+        border-bottom: dashed 2px #505050;
+    }
+    body.tag-site-justins-arcade nav ul li:nth-child(2) {
+        border-bottom: dashed 2px #505050;
+    }
+    body.tag-site-justins-arcade nav ul li:nth-child(3) {
+        border-top: dashed 2px #505050;
+        border-left: dashed 2px #505050;
+        border-right: dashed 2px #505050;
+    }
+    body.tag-site-justins-arcade nav ul li:nth-child(4) {
+        border-bottom: dashed 2px #505050;
+    }
+    @media only screen and (max-width : 768px) {
+        body.tag-site-justins-arcade {
+            background-size: 50%;
+        }
+        body.tag-site-justins-arcade nav ul li:first-child,
+        body.tag-site-justins-arcade nav ul li:nth-child(2),
+        body.tag-site-justins-arcade nav ul li:nth-child(3),
+        body.tag-site-justins-arcade nav ul li:nth-child(4) {
+            border: none;
+        }
+    }
+    body.tag-site-justins-arcade header {
+        background: none;
+    }
+    body.tag-site-justins-arcade header a.branding {
+        font-family: 'Press Start 2P';
+        font-size: 2.5em;
+        text-transform: uppercase;
+    }
+    body.tag-site-justins-arcade header a.branding:after {
+        content: ''
+    }
+    body.tag-site-justins-arcade .main-navigation .menu li a {
+        font-family: 'Press Start 2P';
+        text-transform: uppercase;
+    }
+    body.tag-site-justins-arcade nav {
+        border: 0;
+        background: none;
+    }
+    body.tag-site-justins-arcade nav.main-navigation .menu li.nav-current a {
+        color: #fc2ca1;
+    }
+    body.tag-site-justins-arcade article {
+        background: none;
+    }
+    body.tag-site-justins-arcade article a {
+        color: #fc2ca1;
+        font-family: 'Press Start 2P';
+    }
+    body.tag-site-justins-arcade article p,
+    body.tag-site-justins-arcade h1,
+    body.tag-site-justins-arcade h2,
+    body.tag-site-justins-arcade h3,
+    body.tag-site-justins-arcade h4,
+    body.tag-site-justins-arcade h5,
+    body.tag-site-justins-arcade h6 {
+        font-family: 'Press Start 2P';
+    }
+    body.tag-site-justins-arcade h1,
+    body.tag-site-justins-arcade h2,
+    body.tag-site-justins-arcade h3 {
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+</style>
+<style type="text/css">.github-box *{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;}.github-box{font-family:helvetica,arial,sans-serif;font-size:13px;line-height:18px;background:#fafafa;border:1px solid #ddd;color:#666;border-radius:3px}.github-box a{color:#4183c4;border:0;text-decoration:none}.github-box .github-box-title{position:relative;border-bottom:1px solid #ddd;border-radius:3px 3px 0 0;background:#fcfcfc;background:-moz-linear-gradient(#fcfcfc,#ebebeb);background:-webkit-linear-gradient(#fcfcfc,#ebebeb);}.github-box .github-box-title h3{word-wrap:break-word;font-family:helvetica,arial,sans-serif;font-weight:normal;font-size:16px;color:gray;margin:0;padding:10px 10px 10px 30px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAXCAMAAAAx3e/WAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpEQjIyNkJERkM0NjYxMUUxOEFDQzk3ODcxRDkzRjhCRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpEQjIyNkJFMEM0NjYxMUUxOEFDQzk3ODcxRDkzRjhCRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkRCMjI2QkREQzQ2NjExRTE4QUNDOTc4NzFEOTNGOEJFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkRCMjI2QkRFQzQ2NjExRTE4QUNDOTc4NzFEOTNGOEJFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+dka2KgAAAEVQTFRFxMTEyMjI0tLSvb29vr6+zc3Ny8vLxcXFz8/P6enp3t7ex8fH0dHR1NTUw8PDwMDAzs7OvLy8wcHBu7u7v7+/zMzM////budQFwAAABd0Uk5T/////////////////////////////wDmQOZeAAAAcklEQVR42tSQSQ7DMAwD6chOukWs5eX/Ty2coo0T9wOdEzEgdRBuzNmnDofgja52JDyz5TCqUp0O6kfrb4bzSXkRiTviEZZ6JKLMJ5VQ2v8iGbtbfEwXmjFMG0VwdQo10hQNxYqtLMv9O6xvpZ/QeAkwAKjwHiJLaJc3AAAAAElFTkSuQmCC) 7px center no-repeat; width: auto;}.github-box .github-box-title h3 .repo{font-weight:bold}.github-box .github-box-title .github-stats{float:right;position:absolute;top:8px;right:10px;font-size:11px;font-weight:bold;line-height:21px;height:auto;min-height:21px}.github-box .github-box-title .github-stats a{display:inline-block;height:21px;color:#666;border:1px solid #ddd;border-radius:3px;padding:0 5px 0 18px;background: white url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAqCAMAAACEJ4viAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpEQjIyNkJEQkM0NjYxMUUxOEFDQzk3ODcxRDkzRjhCRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpEQjIyNkJEQ0M0NjYxMUUxOEFDQzk3ODcxRDkzRjhCRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkRCMjI2QkQ5QzQ2NjExRTE4QUNDOTc4NzFEOTNGOEJFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkRCMjI2QkRBQzQ2NjExRTE4QUNDOTc4NzFEOTNGOEJFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+h1kA9gAAAK5QTFRF+fn5sbGx8fHx09PTmpqa2dnZ/f3919fX9PT00NDQ1dXVpKSk+vr6+/v7vb298vLyycnJ8/PztLS0zc3N6enp/v7+q6ur2NjY9/f3srKy/Pz8p6en7u7uoaGhnJyc4eHhtbW1pqam6Ojo9fX17e3toqKirKys1NTUzs7Ox8fHwcHBwMDA5eXlnZ2dpaWl0dHR9vb25ubm4uLi3d3dqqqqwsLCv7+/oKCgmZmZ////8yEsbwAAAMBJREFUeNrE0tcOgjAUBuDSliUoMhTEvfdef9//xUQjgaLX0Ium/ZLT/+SkRPxZpGykvuf5VMJogy5jY9yjDHcWFhqlcRuHc4o6B1QK0BDg+hcZgNDh3NWTwzItH/bRrhvT+g3zSxZkNGCZpoWGIbU0a3Y6zV5VA6keyeDxiw62P0gUqEW0FbDim4nVikFJbU2zZXybUEaxhCqOQqyh5/G0wpWICUwthyqwD4InOMuXJ7/gs7WkoPdVg1vykF8CDACEFanKO3aSYwAAAABJRU5ErkJggg==) no-repeat}.github-box .github-box-title .github-stats .watchers{border-right:1px solid #ddd}.github-box .github-box-title .github-stats .forks{background-position:-4px -21px;padding-left:15px}.github-box .github-box-content{padding:10px;font-weight:300}.github-box .github-box-content p{margin:0}.github-box .github-box-content .link{font-weight:bold}.github-box .github-box-download{position:relative;border-top:1px solid #ddd;background:white;border-radius:0 0 3px 3px;padding:10px;height:auto;min-height:24px;}.github-box .github-box-download .updated{word-wrap:break-word;margin:0;font-size:11px;color:#666;line-height:24px;font-weight:300;width:auto}.github-box .github-box-download .updated strong{font-weight:bold;color:#000}.github-box .github-box-download .download{float:right;position:absolute;top:10px;right:10px;height:24px;line-height:24px;font-size:12px;color:#666;font-weight:bold;text-shadow:0 1px 0 rgba(255,255,255,0.9);padding:0 10px;border:1px solid #ddd;border-bottom-color:#bbb;border-radius:3px;background:#f5f5f5;background:-moz-linear-gradient(#f5f5f5,#e5e5e5);background:-webkit-linear-gradient(#f5f5f5,#e5e5e5);}.github-box .github-box-download .download:hover{color:#527894;border-color:#cfe3ed;border-bottom-color:#9fc7db;background:#f1f7fa;background:-moz-linear-gradient(#f1f7fa,#dbeaf1);background:-webkit-linear-gradient(#f1f7fa,#dbeaf1);}@media (max-width: 767px) {.github-box .github-box-title{height:auto;min-height:60px}.github-box .github-box-title h3 .repo{display:block}.github-box .github-box-title .github-stats a{display:block;clear:right;float:right;}.github-box .github-box-download{height:auto;min-height:46px;}.github-box .github-box-download .download{top:32px;}}</style><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+<body class="post-template tag-software-development tag-emulators tag-gaming"><div><div id="vlb1overlay" style="display: none;"></div><div id="vlb1lightbox" style="display: none;"><table id="vlb1outerImageContainer" cellspacing="0"><tbody><tr><td class="tl"></td><td class="tc"></td><td class="tr"><div id="vlb1close"><a id="vlb1closeLink" href="javascript:void(0);"></a></div></td></tr><tr><td class="ml"></td><td id="vlb1lightboxFrameBody"><div id="vlb1imageContainerMain"><div id="vlb1imageContainer"><img id="vlb1lightboxImage"><div id="vlb1loading"><a id="vlb1loadingLink" href="javascript:void(0);">loading</a></div><div style="position: absolute; right: 0px; bottom: 0px; padding: 2px 3px; background-color: rgb(238, 238, 238); z-index: 10;"><a href="http://justin-credible.net/" style="color: rgb(85, 85, 85); font: 11px Arial, Verdana, sans-serif; padding: 3px 6px; width: auto; height: auto; margin: 0px; outline: none;">Justin-Credible.net</a></div></div><a id="vlb1prevLinkImg" href="javascript:void(0);"></a><a id="vlb1nextLinkImg" href="javascript:void(0);"></a></div><div id="vlb1imageDataContainer" class="vlb1clearfix"><div id="vlb1imageData"><div id="vlb1imageDetails"><div id="vlb1caption" style="display: none;"></div><span id="vlb1numberDisplay"></span><span id="vlb1detailsNav"><a id="vlb1prevLinkDetails" href="javascript:void(0);"></a><a id="vlb1slideShowControl" href="javascript:void(0);"></a><a id="vlb1nextLinkDetails" href="javascript:void(0);"></a></span></div></div></div></td><td class="mr"></td></tr><tr><td class="bl"></td><td class="bc"><div id="vlb1shadow"></div></td><td class="br"></td></tr></tbody></table></div></div>
+	<!-- start header -->
+<header class="main-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- start logo -->
+					<a class="branding" href="http://www.justin-credible.net/">Justin Unterreiner</a>
+				<!-- end logo -->
+			</div>
+		</div>
+	</div>
+</header>
+<!-- end header -->
+<!-- start navigation -->
+<nav class="main-navigation">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="navbar-header">
+					<span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu">
+					<span class="sr-only">Toggle navigation</span>
+					<i class="fa fa-bars"></i>
+					</span>
+				</div>
+				<div class="collapse navbar-collapse" id="main-menu">
+	            <ul class="menu">
+	<li class="nav-home" role="presentation"><a href="http://www.justin-credible.net/">Home</a></li>
+	<li class="nav-projects" role="presentation"><a href="http://www.justin-credible.net/projects/">Projects</a></li>
+	<li class="nav-arcade" role="presentation"><a href="http://www.justin-credible.net/arcade/">Arcade</a></li>
+	<li class="nav-experience" role="presentation"><a href="http://www.justin-credible.net/experience/">Experience</a></li>
+</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>
+<!-- end navigation -->
+	<!-- start site's main content area -->
+<section class="content-wrap">
+	<div class="container">
+		<div class="row">
+			<!-- start main post area -->
+			<div class="col-md-8 main-content">
+				<!-- start post -->
+				<article id="27" class="post tag-software-development tag-emulators tag-gaming">
+					<div class="post-head">
+						<h2 class="post-title">CHIP-8 Emulator</h2>
+						<div class="post-meta">
+							<span class="author">By <a href="https://www.justin-credible.net/author/justin/">Justin Unterreiner</a></span> •
+							<span class="date">September 03, 2019</span>
+						</div>
+					</div>
+					<div class="post-content">
+						<p>Emulators have always been magical to me. I vividly remember the first time I fired up an NES emulator and ran <em>Super Mario Bros.</em> on my 486DX. It didn't run fast, and the experience wasn't great, but it was <em>magical</em>. As Pentiums replaced the 486s, emulation became more viable and I suddenly had access to <em>Final Fantasy</em> titles that were only released in Japan, along with fan translations.</p>
+
+<p>Over the years, emulators have allowed me to play rare games that would otherwise cost exorbitant amounts of money on eBay, or re-experience titles I already own without dusting off my original hardware. Emulators also allow us to archive and preserve old games for future generations as older hardware fails and/or becomes more scarce.</p>
+
+<p><figure class="image"><img src="./index_files/Screen-Shot-2019-08-23-at-8.49.40-PM.png" alt="A screenshot of my CHIP-8 emulator early in development."><figcaption>A screenshot of my CHIP-8 emulator early in development.</figcaption></figure></p>
+
+<p>Beyond playing games, I've always had a technical fascination with emulators as well. I knew the basics of how they worked from my computer architecture and assembly language classes, but even so, they were still shrouded in mystery. I've always wanted to write my own emulator, but sitting down to read how a particular piece of hardware works, or even reading existing emulator code, can be overwhelming.</p>
+
+<p>When I came across an <a href="http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/">article</a> on HackerNews talking about the CHIP-8, and how it was an excellent choice for writing your first emulator, I decided to finally tackle this project.</p>
+
+<p>A lot has been written about the CHIP-8, so I won't go into a lot of detail here. Consider this the ClifNotes version.</p>
+
+<p>Technically, the CHIP-8 wasn't actually a hardware device. Instead, it was an interpreted programming language hobbyist computer, like the <a href="https://en.wikipedia.org/wiki/COSMAC_VIP">COSMAC VIP</a>, from the mid-70s. It allowed software (mostly games) to be written in an intermediary opcode format and then interpreted in different hardware architectures.</p>
+
+<p><figure class="image"><img src="./index_files/4689441488784272480.jpg" alt="No if/then/else constructs here; the CHIP-8 was programmed by typing 16-bit opcodes with a hexadecimal keyboard. (COSMAC VIP, 1977)"><figcaption>No if/then/else constructs here; the CHIP-8 was programmed by typing 16-bit opcodes with a hexadecimal keyboard. (COSMAC VIP, 1977)</figcaption></figure></p>
+
+<p>However, <em>language</em> is a bit generous in this case. Instead of writing in a high-level language like Java, you instead type out 16-byte opcodes on a hexadecimal keyboard. Because you're still very low in the hardware stack, it's similar to writing an emulator for a piece of hardware: you have a program counter, registers, a stack, etc. This makes it a great candidate for a first emulation project.</p>
+
+<p>Overall, this was an extremely rewarding project, and I would highly recommend anyone who's thought about doing this to check out <a href="https://www.justin-credible.net/2019/09/03/chip-8-emulator/">the article</a> I linked earlier. It lays the groundwork without giving too much away.</p>
+
+<p><figure class="image"><img src="./index_files/showcase.gif" alt="A screen capture showing my emulator running VBRIX."><figcaption>A screen capture showing my emulator running VBRIX.</figcaption></figure></p>
+
+<p>I wrote my emulator and assembler in C# targeting the cross-platform .NET Core runtime. It uses SDL2 for the GUI.</p>
+
+<p>You can find more details on <a href="https://github.com/Justin-Credible/CHIP-8-Emulator">GitHub</a>. The readme contains a <a href="https://github.com/Justin-Credible/CHIP-8-Emulator#resources">resources</a> section with some links for recommended reading.</p>
+
+<div class="github-widget" data-repo="Justin-Credible/CHIP-8-Emulator">  
+<div class="github-box repo"><div class="github-box-title"><h3><a class="owner" href="http://github.com/Justin-Credible" title="http://github.com/Justin-Credible">Justin-Credible</a>/<a class="repo" href="http://github.com/Justin-Credible/CHIP-8-Emulator" title="http://github.com/Justin-Credible/CHIP-8-Emulator">CHIP-8-Emulator</a></h3><div class="github-stats"><a class="watchers" href="http://github.com/Justin-Credible/CHIP-8-Emulator/watchers" title="See watchers">8</a><a class="forks" href="http://github.com/Justin-Credible/CHIP-8-Emulator/network/members" title="See forkers">1</a></div></div><div class="github-box-content"><p class="description"><span>🎮 An emulator for the CHIP-8 virtual machine.</span> — <a href="http://github.com/Justin-Credible/CHIP-8-Emulator#readme">Read More</a></p><p class="link"><a href="https://www.justin-credible.net/2019/09/03/chip-8-emulator/">https://www.justin-credible.net/2019/09/03/chip-8-emulator/</a></p></div><div class="github-box-download"><div class="updated">Latest commit to the <strong>master</strong> branch on 9-29-2019</div><a class="download" href="http://github.com/Justin-Credible/CHIP-8-Emulator/zipball/master" title="Get an archive of this repository">Download as zip</a></div></div></div>
+					</div>
+					<footer class="post-footer clearfix">
+						<div class="pull-left tag-list">
+								<i class="fa fa-folder-open-o"></i>
+								<a href="https://www.justin-credible.net/tag/software-development/" title="Software Development" class="tag tag-5 software-development">Software Development</a>,<a href="https://www.justin-credible.net/tag/emulators/" title="Emulators" class="tag tag-9 emulators">Emulators</a>,<a href="https://www.justin-credible.net/tag/gaming/" title="Gaming" class="tag tag-8 gaming">Gaming</a>
+						</div>
+						<div class="pull-right share">
+							<ul class="share-icons">
+	<li>
+		<a href="https://bsky.app/intent/compose?text=CHIP-8%20Emulator+http://www.justin-credible.net/2019/09/03/chip-8-emulator/" onclick="window.open(this.href, &#39;bluesky-share&#39;, &#39;width=550,height=550&#39;);return false;">
+			<i class="fa fa-home" style="color: transparent;">
+				<img src="./index_files/bluesky.svg" style="width: 12px; height: 12px; position: absolute; top: 8px; left: 7px;">
+			</i>
+		</a>
+	</li>
+	<li>
+		<a href="https://www.facebook.com/sharer/sharer.php?u=http://www.justin-credible.net/2019/09/03/chip-8-emulator/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;"><i class="fa fa-facebook"></i></a>
+	</li>
+	<li>
+		<a href="javascript:void((function()%7Bvar%20e=document.createElement(&#39;script&#39;);e.setAttribute(&#39;type&#39;,&#39;text/javascript&#39;);e.setAttribute(&#39;charset&#39;,&#39;UTF-8&#39;);e.setAttribute(&#39;src&#39;,&#39;//assets.pinterest.com/js/pinmarklet.js?r=&#39;+Math.random()*99999999);document.body.appendChild(e)%7D)());"><i class="fa fa-pinterest"></i></a>
+	</li>
+	<li>
+		<a href="https://www.linkedin.com/shareArticle?mini=true%26url=http://www.justin-credible.net/2019/09/03/chip-8-emulator/%26source=http://www.justin-credible.net" onclick="window.open(this.href, &#39;linkedin-share&#39;, &#39;width=490,height=530&#39;);return false;"><i class="fa fa-linkedin"></i></a>
+	</li>
+</ul>						</div>
+					</footer>
+				</article>
+				<!-- start about the author -->
+<div class="about-author clearfix">
+		<a href="https://www.justin-credible.net/author/justin/"><img src="./index_files/d822557c426b50ed688d74cb203af356.jpeg" alt="Author image" class="avatar pull-left"></a>
+	<div class="details">
+		<div class="author">
+			About <a href="https://www.justin-credible.net/author/justin/">Justin Unterreiner</a>
+		</div>
+		<div class="meta-info">
+			<span class="loaction"><i class="fa fa-home"></i>Northern California</span>
+		</div>
+		<div class="bio">
+			A software geek who is into IoT devices, gaming, and Arcade restoration.
+		</div>
+	</div>
+</div>
+<!-- end about the author -->				<!-- start prev next wrap -->
+<div class="prev-next-wrap clearfix">
+		<a class="btn btn-default" href="https://www.justin-credible.net/2019/12/15/capacitor-typescript-definitions-for-legacy-projects/"><i class="fa fa-angle-left fa-fw"></i> Previous Post : Capacitor TypeScript definitions for legacy projects</a>
+		&nbsp;
+        <a class="btn btn-default" href="https://www.justin-credible.net/2019/03/28/williams-multigame/">Next Post : Williams Multigame <i class="fa fa-angle-right fa-fw"></i></a>
+</div>				<!-- end post -->
+			</div>
+			<!-- end main post area -->
+				<!-- start sidebar -->
+<div class="col-md-4 sidebar">
+	<!-- start widget -->
+<div class="widget">
+	<h4 class="title">Contact</h4>
+	<div class="content">
+		<ul class="social">
+			<li><a title="GitHub" href="https://github.com/Justin-Credible"><i class="fa fa-github"></i></a></li>
+			<li>
+				<a title="Bluesky" href="https://bsky.app/profile/justin-credible.net">
+					<i class="fa fa-home" style="color: transparent">
+						<img src="./index_files/bluesky.svg" style="width: 30px; height: 30px; position: absolute; top: 2px; left: 2px;">
+					</i>
+				</a>
+			</li>
+			<li><a title="LinkedIn" href="https://www.linkedin.com/pub/justin-unterreiner/92/3aa/1b3"><i class="fa fa-linkedin"></i></a></li>
+			<li><a title="E-Mail" href="mailto:justin.unterreiner@gmail.com"><i class="fa fa-envelope"></i></a></li>
+			<li><a title="RSS Feed" href="http://www.justin-credible.net/rss/"><i class="fa fa-rss"></i></a></li>
+			<!-- end social links -->
+		</ul>
+	</div>
+</div>
+
+<div class="widget">
+	<h4 class="title">Justin's Arcade</h4>
+	<div class="content">
+		<ul class="social">
+			<li><a title="Website" href="https://www.justin-credible.net/arcade"><i class="fa fa-home"></i></a></li>
+			<li><a title="YouTube" href="https://www.youtube.com/channel/UC6v-b_CQeSwZQXxXEWgCikg"><i class="fa fa-youtube"></i></a></li>
+			<li><a title="Instagram" href="https://www.instagram.com/justins_arcade/"><i class="fa fa-instagram"></i></a></li>
+			<li><a title="Vintage Arcade Preservation Society" href="http://www.arcade-museum.com/members/member_detail.php?member_id=452252"><i class="fa fa-gamepad"></i></a></li>
+		</ul>
+	</div>
+</div>
+<!-- end widget -->	<!-- start widget -->
+<div class="widget">
+	<h4 class="title">Recent Posts</h4>
+	<div class="content recent-post"><div class="recent-single-post"><a href="https://www.justin-credible.net/2024/07/07/donkey-kong-junior-conversion/" class="post-title">Donkey Kong Junior conversion</a><div class="date">July 7, 2024</div></div><div class="recent-single-post"><a href="https://www.justin-credible.net/2024/04/14/super-mario-bros-pinball-mods/" class="post-title">Super Mario Bros. Pinball Mods</a><div class="date">April 14, 2024</div></div><div class="recent-single-post"><a href="https://www.justin-credible.net/2023/12/04/locking-in-typescript/" class="post-title">Locking in TypeScript</a><div class="date">December 4, 2023</div></div></div>
+</div>
+<!-- end widget -->	<!-- start tag cloud widget -->
+<div class="widget">
+	<h4 class="title">Tags</h4>
+	<div class="content tag-cloud">
+					<a href="https://www.justin-credible.net/tag/cordova/" title="Cordova" class="tag tag-2 cordova">Cordova</a>
+					<a href="https://www.justin-credible.net/tag/arcade-restoration/" title="Arcade Restoration" class="tag tag-3 arcade-restoration">Arcade Restoration</a>
+					<a href="https://www.justin-credible.net/tag/home-networking/" title="Home Networking" class="tag tag-4 home-networking">Home Networking</a>
+					<a href="https://www.justin-credible.net/tag/software-development/" title="Software Development" class="tag tag-5 software-development">Software Development</a>
+					<a href="https://www.justin-credible.net/tag/the-internet-of-things/" title="The Internet of Things" class="tag tag-6 the-internet-of-things">The Internet of Things</a>
+					<a href="https://www.justin-credible.net/tag/home-automation/" title="Home Automation" class="tag tag-7 home-automation">Home Automation</a>
+					<a href="https://www.justin-credible.net/tag/gaming/" title="Gaming" class="tag tag-8 gaming">Gaming</a>
+					<a href="https://www.justin-credible.net/tag/emulators/" title="Emulators" class="tag tag-9 emulators">Emulators</a>
+					<a href="https://www.justin-credible.net/tag/capacitor/" title="Capacitor" class="tag tag-10 capacitor">Capacitor</a>
+					<a href="https://www.justin-credible.net/tag/arcade-misc/" title="Arcade Miscellaneous" class="tag tag-11 arcade-misc">Arcade Miscellaneous</a>
+					<a href="https://www.justin-credible.net/tag/game-dev/" title="Game Dev" class="tag tag-12 game-dev">Game Dev</a>
+					<a href="https://www.justin-credible.net/tag/pinball/" title="Pinball" class="tag tag-17 pinball">Pinball</a>
+	</div>
+</div>
+<!-- end tag cloud widget -->
+	<!-- start widget -->
+<div class="widget gaming-sidebar">
+	<h4 class="title">Gaming</h4>
+	<div class="content">
+
+		<div class="gaming-links">
+			<span><a href="https://www.grouvee.com/user/JustinCredible/shelves/62935-playing/?utm_medium=api&amp;utm_source=shelf_widget">Currently Playing:</a></span>
+		</div>
+
+		<div id="grouvee_widget_62935_sidebar">
+
+<h2>
+    <a target="_blank" href="https://www.grouvee.com/user/11976-JustinCredible/shelves/62935-playing/?utm_medium=api&amp;utm_source=shelf_widget" style="text-decoration: none;">
+        JustinCredible's Playing Grouvee shelf
+    </a>
+</h2>
+
+    <div class="grouvee_container">
+        <div class="grouvee_game">
+            <a target="_blank" href="https://www.grouvee.com/games/196497-arc-raiders/?utm_medium=api&amp;utm_source=shelf_widget" title="">
+                
+                    <img alt="ARC Raiders" border="0" src="./index_files/295bc173ba0516d570b17bd21d124761.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="grouvee_container">
+        <div class="grouvee_game">
+            <a target="_blank" href="https://www.grouvee.com/games/190842-hades-ii/?utm_medium=api&amp;utm_source=shelf_widget" title="">
+                
+                    <img alt="Hades II" border="0" src="./index_files/62f0fbe954edec8a55c82dfbfaef808d.jpg">
+                
+            </a>
+        </div>
+    </div>
+</div>
+
+		<div class="gaming-links">
+			<span><a href="https://www.grouvee.com/user/JustinCredible/shelves/62983-all-time-favorites">View All-Time Favorites</a></span>
+		</div>
+
+	</div>
+</div>
+<!-- end widget --></div>
+<!-- end sidebar -->		</div>
+	</div>
+</section>
+<!-- end site's main content area -->
+
+	<!-- start main-footer -->
+	<footer class="main-footer">
+		<div class="container">
+			<div class="row">
+				<!-- start first footer widget area -->
+				<div class="col-sm-4">
+					<!-- start widget -->
+<div class="widget">
+	<h4 class="title">Recent Posts</h4>
+	<div class="content recent-post"><div class="recent-single-post"><a href="https://www.justin-credible.net/2024/07/07/donkey-kong-junior-conversion/" class="post-title">Donkey Kong Junior conversion</a><div class="date">July 7, 2024</div></div><div class="recent-single-post"><a href="https://www.justin-credible.net/2024/04/14/super-mario-bros-pinball-mods/" class="post-title">Super Mario Bros. Pinball Mods</a><div class="date">April 14, 2024</div></div><div class="recent-single-post"><a href="https://www.justin-credible.net/2023/12/04/locking-in-typescript/" class="post-title">Locking in TypeScript</a><div class="date">December 4, 2023</div></div></div>
+</div>
+<!-- end widget -->				</div>
+				<!-- end first footer widget area -->
+				<!-- start second footer widget area -->
+				<div class="col-sm-4">
+					<!-- start tag cloud widget -->
+<div class="widget">
+	<h4 class="title">Tags</h4>
+	<div class="content tag-cloud">
+					<a href="https://www.justin-credible.net/tag/cordova/" title="Cordova" class="tag tag-2 cordova">Cordova</a>
+					<a href="https://www.justin-credible.net/tag/arcade-restoration/" title="Arcade Restoration" class="tag tag-3 arcade-restoration">Arcade Restoration</a>
+					<a href="https://www.justin-credible.net/tag/home-networking/" title="Home Networking" class="tag tag-4 home-networking">Home Networking</a>
+					<a href="https://www.justin-credible.net/tag/software-development/" title="Software Development" class="tag tag-5 software-development">Software Development</a>
+					<a href="https://www.justin-credible.net/tag/the-internet-of-things/" title="The Internet of Things" class="tag tag-6 the-internet-of-things">The Internet of Things</a>
+					<a href="https://www.justin-credible.net/tag/home-automation/" title="Home Automation" class="tag tag-7 home-automation">Home Automation</a>
+					<a href="https://www.justin-credible.net/tag/gaming/" title="Gaming" class="tag tag-8 gaming">Gaming</a>
+					<a href="https://www.justin-credible.net/tag/emulators/" title="Emulators" class="tag tag-9 emulators">Emulators</a>
+					<a href="https://www.justin-credible.net/tag/capacitor/" title="Capacitor" class="tag tag-10 capacitor">Capacitor</a>
+					<a href="https://www.justin-credible.net/tag/arcade-misc/" title="Arcade Miscellaneous" class="tag tag-11 arcade-misc">Arcade Miscellaneous</a>
+					<a href="https://www.justin-credible.net/tag/game-dev/" title="Game Dev" class="tag tag-12 game-dev">Game Dev</a>
+					<a href="https://www.justin-credible.net/tag/pinball/" title="Pinball" class="tag tag-17 pinball">Pinball</a>
+	</div>
+</div>
+<!-- end tag cloud widget -->
+				</div>
+				<!-- end second footer widget area -->
+				<!-- start third footer widget area -->
+				<div class="col-sm-4">
+					<!-- start widget -->
+<div class="widget gaming-footer">
+	<h4 class="title">Gaming</h4>
+
+	<div class="gaming-links">
+		<span><a href="https://www.grouvee.com/user/JustinCredible/shelves/62935-playing/?utm_medium=api&amp;utm_source=shelf_widget">Currently Playing:</a></span>
+	</div>
+
+	<div id="grouvee_widget_62935_footer">
+
+<h2>
+    <a target="_blank" href="https://www.grouvee.com/user/11976-JustinCredible/shelves/62935-playing/?utm_medium=api&amp;utm_source=shelf_widget" style="text-decoration: none;">
+        JustinCredible's Playing Grouvee shelf
+    </a>
+</h2>
+
+    <div class="grouvee_container">
+        <div class="grouvee_game">
+            <a target="_blank" href="https://www.grouvee.com/games/196497-arc-raiders/?utm_medium=api&amp;utm_source=shelf_widget" title="">
+                
+                    <img alt="ARC Raiders" border="0" src="./index_files/295bc173ba0516d570b17bd21d124761.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="grouvee_container">
+        <div class="grouvee_game">
+            <a target="_blank" href="https://www.grouvee.com/games/190842-hades-ii/?utm_medium=api&amp;utm_source=shelf_widget" title="">
+                
+                    <img alt="Hades II" border="0" src="./index_files/62f0fbe954edec8a55c82dfbfaef808d.jpg">
+                
+            </a>
+        </div>
+    </div>
+</div>
+
+	<div class="gaming-links">
+		<span><a href="https://www.grouvee.com/user/JustinCredible/shelves/62983-all-time-favorites">View All-Time Favorites</a></span>
+	</div>
+
+</div>
+<!-- end widget -->				</div>
+				<!-- end third footer widget area -->
+			</div>
+		</div>
+	</footer>
+	<!-- end main-footer -->
+	<!-- start copyright section -->
+<div class="copyright">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				Copyright © 2026, <a href="http://www.justin-credible.net/">Justin Unterreiner</a>.  All Right Reserved
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end copyright section -->	<a href="https://www.justin-credible.net/2019/09/03/chip-8-emulator/#" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+	<script src="./index_files/jquery.min.js"></script>
+
+<!-- Old photo gallery -->
+<link rel="stylesheet" href="./index_files/vlightbox1.css" type="text/css">
+<link rel="stylesheet" href="./index_files/visuallightbox.css" type="text/css" media="screen">
+<script src="./index_files/visuallightbox.js" type="text/javascript"></script>
+<script src="./index_files/vlbdata1.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="./index_files/jquery.githubRepoWidget.min.js"></script>
+
+<div id="grouvee_widget_62935" style="display: none;">
+
+<h2>
+    <a target="_blank" href="https://www.grouvee.com/user/11976-JustinCredible/shelves/62935-playing/?utm_medium=api&amp;utm_source=shelf_widget" style="text-decoration: none;">
+        JustinCredible's Playing Grouvee shelf
+    </a>
+</h2>
+
+    <div class="grouvee_container">
+        <div class="grouvee_game">
+            <a target="_blank" href="https://www.grouvee.com/games/196497-arc-raiders/?utm_medium=api&amp;utm_source=shelf_widget" title="">
+                
+                    <img alt="ARC Raiders" border="0" src="./index_files/295bc173ba0516d570b17bd21d124761.jpg">
+                
+            </a>
+        </div>
+    </div>
+
+    <div class="grouvee_container">
+        <div class="grouvee_game">
+            <a target="_blank" href="https://www.grouvee.com/games/190842-hades-ii/?utm_medium=api&amp;utm_source=shelf_widget" title="">
+                
+                    <img alt="Hades II" border="0" src="./index_files/62f0fbe954edec8a55c82dfbfaef808d.jpg">
+                
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="./index_files/saved_resource" type="text/javascript" charset="utf-8"></script>
+
+<script>
+    (function() {
+        var sidebarDiv = document.getElementById("grouvee_widget_62935_sidebar");
+        var footerDiv = document.getElementById("grouvee_widget_62935_footer");
+
+        if (typeof(widget_code) !== "undefined" && sidebarDiv) {
+            sidebarDiv.innerHTML = widget_code;
+        }
+
+        if (typeof(widget_code) !== "undefined" && footerDiv) {
+            footerDiv.innerHTML = widget_code;
+        }
+    })();
+</script>
+
+<!-- New photo gallery -->
+<script src="./index_files/photoswipe.min.js"></script> 
+<script src="./index_files/photoswipe-ui-default.min.js"></script>
+<script src="./index_files/photoswipe-loader-2d.js"></script>
+
+<!-- ***************** START PhotoSwipe Root Element ********************* -->
+
+<!-- Default HTML taken from the documentation at: http://photoswipe.com/documentation/getting-started.html -->
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div id="pswp" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ***************** END PhotoSwipe Root Element ********************* -->
+
+<!-- Image captions -->
+<!-- https://blog.kchung.co/adding-image-captions-to-ghost/ -->
+<script>  
+    // Creates Captions from Alt tags
+    $(".post-content img").each(
+        function() {
+            // Let's put a caption if there is one
+            if ($(this).attr("alt")) {
+                $(this).wrap(
+                    '<figure class="image"></figure>'
+                ).after(
+                    '<figcaption>' +
+                    $(this).attr(
+                        "alt") +
+                    '</figcaption>'
+                );
+            }
+        });
+</script>
+	<!-- scripts -->
+	<script src="./index_files/jquery.fitvids.js"></script>
+	<script src="./index_files/bootstrap.min.js"></script>
+	<script src="./index_files/prism.js" data-manual=""></script>
+	<script src="./index_files/main.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			if (typeof(PageClass) === "function") {
+				window.Page = new PageClass();
+
+				try {
+					window.Page.initialize()
+						.then(function () { console.debug("footer.hbs - Page initialized OK"); })
+						.catch(function (error) { console.error("footer.hbs - Page initialization error (async)", error); });
+				}
+				catch (error) {
+					console.error("footer.hbs - Page initialization error (sync)", error);
+				}
+			}
+		});
+	</script>
+	
+</body></html>
